@@ -1,0 +1,5 @@
+# Build Docker image
+$ docker build -t keras_flask_app .
+
+# Run
+$ docker run -it --rm -p 5000:5000 keras_flask_app
