@@ -15,17 +15,26 @@ def hello1():
 @app.route("/<urlImg>")
 def predict(urlImg):
     keras.backend.clear_session();
-    model = keras.models.load_model('models/DenseNet201_160x160.h5');
+    try:
+        model = keras.models.load_model('models/DenseNet201_160x160.h5');
+    except:
+        print("Lỗĩ model")
     #decode
-    inputs="\\";
-    outputs="/";
-    linkk = str(urlImg);
-    trans = linkk.maketrans(inputs, outputs)
-    linkk=linkk.translate(trans)
+    try:
+        inputs="\\";
+        outputs="/";
+        linkk = str(urlImg);
+        trans = linkk.maketrans(inputs, outputs)
+        linkk=linkk.translate(trans)
+    except:
+        print("Lỗĩ Decode")
     # urlImg ="https://hakufarm.vn/wp-content/uploads/2017/11/hinh-anh-y-nghia-cua-hoa-huong-duong.jpg"
-    f = open('00000001.jpg','wb')
-    f.write(urllib.request.urlopen(linkk).read())
-    f.close()
+    try:
+        f = open('00000001.jpg','wb')
+        f.write(urllib.request.urlopen(linkk).read())
+        f.close()
+    except:
+        print("Lỗĩ ghi ảnh");
     img = keras.preprocessing.image.load_img('00000001.jpg', target_size=(160, 160))
     img_tensor = keras.preprocessing.image.img_to_array(img)
     img_tensor = np.expand_dims(img_tensor, axis=0)
@@ -34,9 +43,9 @@ def predict(urlImg):
     kq = np.argmax(predict, axis=-1)
     # print(img_tensor)
     if kq == 0:
-        return jsonify({"Lable":"1"})
+        return jsonify({"Label": "1"})
     elif kq == 1:
-        return jsonify({"Lable":"0"})
+        return jsonify({"Label": "0"})
 
 
 if __name__ == '__main__':
