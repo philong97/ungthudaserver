@@ -19,19 +19,23 @@ def predict(urlImg):
         model = keras.models.load_model('models/DenseNet201_160x160.h5');
     except:
         print("Lỗĩ model")
-    #decode
-    try:
-        inputs="\\";
-        outputs="/";
-        linkk = str(urlImg);
-        trans = linkk.maketrans(inputs, outputs)
-        linkk=linkk.translate(trans)
-    except:
-        print("Lỗĩ Decode")
+    urlImg = urlImg.replace("QQQWWWEEE","/")
+    # decode
+    # try:
+    #     inputs="\\";
+    #     outputs="/";
+    #     linkk = str(urlImg);
+    #     trans = linkk.maketrans(inputs, outputs)
+    #     linkk=linkk.translate(trans)
+    # #     print(linkk)
+    # except:
+    #     print("Lỗĩ Decode")
     # urlImg ="https://hakufarm.vn/wp-content/uploads/2017/11/hinh-anh-y-nghia-cua-hoa-huong-duong.jpg"
+    print(1111)
+    print(urlImg)
     try:
         f = open('00000001.jpg','wb')
-        f.write(urllib.request.urlopen(linkk).read())
+        f.write(urllib.request.urlopen(urlImg).read())
         f.close()
     except:
         print("Lỗĩ ghi ảnh");
